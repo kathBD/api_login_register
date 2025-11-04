@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro</title>
+</head>
+<body>
+  <h1>Registro de Usuario</h1>
+  <form id="registroForm">
+    <input type="text" name="name" placeholder="Nombre" required><br>
+    <input type="email" name="email" placeholder="Correo" required><br>
+    <input type="password" name="password" placeholder="Contraseña" required><br>
+    <button type="submit">Registrar</button>
+  </form>
+  <p id="mensaje"></p>
+
+  <script>
+    const form = document.getElementById("registroForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        name: form.name.value,
+        email: form.email.value,
+        password: form.password.value
+      };
+      const res = await fetch("/api/registro", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const resultado = await res.json();
+      document.getElementById("mensaje").innerText = resultado.mensaje;
+    });
+  </script>
+</body>
+</html>
+
+
+

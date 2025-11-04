@@ -55,7 +55,7 @@ npm run dev
    
 ```bash
 
-POST /api/registro
+POST 
 ```
 
 JSON esperado:

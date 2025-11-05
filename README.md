@@ -55,7 +55,10 @@ npm run dev
    
 ```bash
 
-POST 
+POST http://localhost:3000/registro
+POST http://localhost:3000/login
+
+
 ```
 
 JSON esperado:

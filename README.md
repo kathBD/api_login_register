@@ -73,6 +73,14 @@ JSON esperado:
 
 ```
 
+5. #APi para pruebas
+   
+
+<img width="1810" height="857" alt="image" src="https://github.com/user-attachments/assets/9a6d09b5-f71a-430a-b0aa-55ca0c7b51d3" />
+
+<img width="1619" height="840" alt="image" src="https://github.com/user-attachments/assets/21e5ea82-effa-4679-b8be-a58cdd0875e9" />
+
+<img width="1809" height="857" alt="image" src="https://github.com/user-attachments/assets/53fa2a93-25bd-4211-8701-b90d995606d5" />
 
 
 

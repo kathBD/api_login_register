@@ -6,8 +6,8 @@
     <title>Registro - API Service</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -17,66 +17,184 @@
         .register-card {
             background: white;
             padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .register-card:hover {
+            transform: translateY(-5px);
         }
         h1 { 
             color: #333; 
             margin-bottom: 1.5rem;
-            font-size: 1.8rem;
+            font-size: 2rem;
+            font-weight: 600;
         }
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
         }
         input {
             width: 100%;
-            padding: 12px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            padding: 14px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
             box-sizing: border-box;
+            font-size: 16px;
             transition: border-color 0.3s;
         }
         input:focus {
             outline: none;
             border-color: #ff7e5f;
-            box-shadow: 0 0 5px rgba(255, 126, 95, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 126, 95, 0.1);
         }
         button {
             width: 100%;
-            padding: 12px;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
             border: none;
             color: white;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
             margin-top: 10px;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
         }
-        button:hover {
-            opacity: 0.9;
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 126, 95, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
         }
         #mensaje {
             margin-top: 20px;
-            font-size: 14px;
-            padding: 10px;
-            border-radius: 4px;
-            display: none; /* Se muestra al recibir respuesta */
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            display: none;
+            animation: fadeIn 0.5s ease;
         }
-        .link-back {
+        
+        /* Estilos para mensajes de éxito */
+        .mensaje-exito {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border: 2px solid #c3e6cb;
+            font-size: 18px !important;
+            font-weight: 600 !important;
+        }
+        
+        /* Estilos para mensajes de error */
+        .mensaje-error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        
+        /* Estilos para mensaje de carga */
+        .mensaje-carga {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+        
+        /* Estilo especial para el mensaje de registro exitoso */
+        .registro-exitoso {
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            color: #1e7e34 !important;
+            padding: 20px !important;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-radius: 10px;
+            margin-top: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .link-login {
             display: block;
-            margin-top: 15px;
-            color: #666;
+            margin-top: 20px;
+            color: #ff7e5f;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-weight: 500;
+            font-size: 15px;
         }
-        .link-back:hover { text-decoration: underline; }
+        .link-login:hover { 
+            text-decoration: underline;
+            color: #e56b4a;
+        }
+        
+        .password-strength {
+            margin-top: 5px;
+            font-size: 12px;
+            padding: 5px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .strength-weak {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .strength-medium {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .strength-strong {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff7e5f;
+            border-radius: 50%;
+            animation: confetti 1s ease-out forwards;
+        }
     </style>
 </head>
 <body>
@@ -84,39 +202,135 @@
         <h1>Crear Cuenta</h1>
         <form id="registroForm">
             <div class="input-group">
-                <input type="text" name="name" placeholder="Nombre completo" required>
+                <label for="name">Nombre completo</label>
+                <input type="text" id="name" name="name" placeholder="Ej: Juan Pérez" required>
             </div>
+            
             <div class="input-group">
-                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="ejemplo@email.com" required>
             </div>
+            
             <div class="input-group">
-                <input type="password" name="password" placeholder="Contraseña (mín. 6 caracteres)" minlength="6" required>
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" 
+                       placeholder="Mínimo 6 caracteres" 
+                       minlength="6" 
+                       required
+                       oninput="checkPasswordStrength(this.value)">
+                <div id="passwordStrength" class="password-strength"></div>
             </div>
-            <button type="submit">Registrarse ahora</button>
+            
+            <button type="submit">
+                <span id="buttonText">Crear Mi Cuenta</span>
+            </button>
         </form>
         
-        <p id="mensaje"></p>
+        <div id="mensaje"></div>
         
-        <a href="/login" class="link-back">¿Ya tienes cuenta? Inicia sesión</a>
+        <a href="/login" class="link-login">¿Ya tienes cuenta? Inicia sesión aquí</a>
     </div>
 
     <script>
         const form = document.getElementById("registroForm");
         const msgElement = document.getElementById("mensaje");
-
+        const buttonText = document.getElementById("buttonText");
+        
+        // Función para verificar fortaleza de contraseña
+        function checkPasswordStrength(password) {
+            const strengthElement = document.getElementById("passwordStrength");
+            
+            if (password.length === 0) {
+                strengthElement.style.display = 'none';
+                return;
+            }
+            
+            let strength = 0;
+            let message = '';
+            let className = '';
+            
+            if (password.length >= 6) strength++;
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            if (strength < 2) {
+                message = 'Débil';
+                className = 'strength-weak';
+            } else if (strength < 4) {
+                message = 'Media';
+                className = 'strength-medium';
+            } else {
+                message = 'Fuerte';
+                className = 'strength-strong';
+            }
+            
+            strengthElement.textContent = `Fortaleza: ${message}`;
+            strengthElement.className = `password-strength ${className}`;
+            strengthElement.style.display = 'block';
+        }
+        
+        // Función para crear efecto de confeti
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(confetti);
+                
+                // Eliminar después de la animación
+                setTimeout(() => {
+                    confetti.remove();
+                }, 1000);
+            }
+        }
+        
+        function getRandomColor() {
+            const colors = ['#ff7e5f', '#feb47b', '#667eea', '#764ba2', '#4facfe', '#00f2fe'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
             
-            // UI de carga
+            // Validar contraseña
+            const password = form.password.value;
+            if (password.length < 6) {
+                msgElement.style.display = "block";
+                msgElement.className = "mensaje-error";
+                msgElement.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <div style="font-size: 20px; margin-right: 10px;">⚠️</div>
+                        <div>
+                            <strong>Error:</strong> La contraseña debe tener al menos 6 caracteres
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Mostrar mensaje de carga
             msgElement.style.display = "block";
-            msgElement.innerText = "Procesando registro...";
-            msgElement.style.backgroundColor = "#eee";
-            msgElement.style.color = "#333";
-
+            msgElement.className = "mensaje-carga";
+            msgElement.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 20px; height: 20px; border: 3px solid #0c5460; border-top-color: transparent; border-radius: 50%; margin-right: 10px; animation: spin 1s linear infinite;"></div>
+                    Creando tu cuenta...
+                </div>
+            `;
+            
+            // Deshabilitar botón
+            const submitButton = form.querySelector('button');
+            submitButton.disabled = true;
+            buttonText.textContent = "Registrando...";
+            
             const data = {
-                name: form.name.value,
-                email: form.email.value,
-                password: form.password.value
+                name: form.name.value.trim(),
+                email: form.email.value.trim().toLowerCase(),
+                password: password
             };
 
             try {
@@ -128,20 +342,96 @@
 
                 const resultado = await res.json();
                 
+                // Reiniciar botón
+                submitButton.disabled = false;
+                buttonText.textContent = "Crear Mi Cuenta";
+                
                 if (res.ok) {
-                    msgElement.style.backgroundColor = "#d4edda";
-                    msgElement.style.color = "#155724";
-                    msgElement.innerText = "¡Registro exitoso! Redirigiendo...";
-                    setTimeout(() => window.location.href = '/login', 2000);
+                    // ÉXITO - Mostrar mensaje especial
+                    msgElement.className = "registro-exitoso pulse-animation";
+                    
+                    // Crear efecto de confeti
+                    createConfetti();
+                    
+                    msgElement.innerHTML = `
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">🎉</div>
+                            <div style="font-size: 22px; margin-bottom: 10px; font-weight: 700;">
+                                ¡CUENTA CREADA EXITOSAMENTE!
+                            </div>
+                            <div style="font-size: 16px; color: #1e7e34; margin-top: 10px;">
+                                Bienvenido/a <strong>${resultado.usuario?.name || data.name}</strong>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.7); padding: 10px; border-radius: 5px; margin-top: 15px; font-size: 14px;">
+                                <strong>Datos de tu cuenta:</strong><br>
+                                Email: ${resultado.usuario?.email || data.email}<br>
+                                ID: ${resultado.usuario?.id || 'Generado'}
+                            </div>
+                            <div style="margin-top: 15px; font-size: 14px; color: #666;">
+                                Redirigiendo al login en 3 segundos...
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Redirigir después de 3 segundos
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 3000);
+                    
                 } else {
-                    msgElement.style.backgroundColor = "#f8d7da";
-                    msgElement.style.color = "#721c24";
-                    msgElement.innerText = resultado.mensaje || "Error en el registro";
+                    // ERROR
+                    msgElement.className = "mensaje-error";
+                    msgElement.innerHTML = `
+                        <div style="display: flex; align-items: center;">
+                            <div style="font-size: 20px; margin-right: 10px;">❌</div>
+                            <div>
+                                <strong>Error en el registro:</strong><br>
+                                ${resultado.mensaje || "No se pudo crear la cuenta"}
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Agregar efecto de shake al formulario
+                    form.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        form.style.animation = '';
+                    }, 500);
                 }
             } catch (err) {
-                msgElement.innerText = "Error de conexión con el servidor";
+                // Error de conexión
+                submitButton.disabled = false;
+                buttonText.textContent = "Crear Mi Cuenta";
+                
+                msgElement.className = "mensaje-error";
+                msgElement.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <div style="font-size: 20px; margin-right: 10px;">⚠️</div>
+                        <div>
+                            <strong>Error de conexión:</strong> No se pudo conectar con el servidor
+                        </div>
+                    </div>
+                `;
+                console.error("Error:", err);
             }
         });
+        
+        // Agregar estilo para spin animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Enfocar automáticamente el primer campo
+        document.getElementById('name').focus();
     </script>
 </body>
 </html>
